@@ -1,0 +1,57 @@
+groups:
+- name: dev-env
+  jobs:
+  - build-image
+  - deploy-image
+
+resources:
+- name: source-repo
+  type: git
+  source:
+    uri: ((git-repo-url))
+    branch: ((git-repo-branch))
+    private_key: ((git-private-key))
+
+ 
+- name: docker-image
+  type: docker-image
+  source:
+    username: ((docker-hub-username))
+    password: ((docker-hub-password))
+    repository: ((docker-hub-username))/((docker-image-name)) 
+
+    
+
+jobs:
+- name: build-image
+  plan:
+  - get: source-repo
+    trigger: false
+  - put: docker-image
+    params:
+      build: source-repo    
+- name: deploy-image
+  plan:
+  - get: source-repo
+    trigger: false
+    passed:
+    - build-image
+  - task: deploy-app    
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: gattal/gcloud-sdk-utl
+      inputs:          
+        - name: source-repo
+      run:
+        path: ./source-repo/command.sh
+        args:
+        - source-repo
+        - deploy
+        - ((gcloud-project-name))
+        - ((gcloud-sa))
+        - ((gcloud-sa-key))
+        - ((gke-name))
+        - ((gke-zone))

@@ -1,0 +1,22 @@
+
+docker-hub-username: gattal
+docker-hub-password: ########
+docker-image-name: marbles-api-grpc
+#docker-image-tag:
+git-repo-url: git@github.com:govinda-attal/marbles-api.git
+git-repo-branch: master
+git-private-key: |-
+    -----BEGIN RSA PRIVATE KEY-----
+    #############
+    -----END RSA PRIVATE KEY-----
+gcloud-sa: dev-k8s@fabric-blockchain.iam.gserviceaccount.com
+gcloud-sa-key: |-
+    {
+    "type": "service_account",
+    ########
+    }
+
+
+gcloud-project-name: fabric-blockchain
+gke-name: dev
+gke-zone: australia-southeast1-a
