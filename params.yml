@@ -9,7 +9,7 @@ git-private-key: |-
     -----BEGIN RSA PRIVATE KEY-----
     #############
     -----END RSA PRIVATE KEY-----
-gcloud-sa: dev-k8s@fabric-blockchain.iam.gserviceaccount.com
+gcloud-sa: ####
 gcloud-sa-key: |-
     {
     "type": "service_account",
